@@ -2,7 +2,7 @@
     'use strict';
     var MODULE_NAME = 'ngclipboard';
     var angular, Clipboard;
-    
+
     // Check for CommonJS support
     if (typeof module === 'object' && module.exports) {
       angular = require('angular');
@@ -18,10 +18,18 @@
             restrict: 'A',
             scope: {
                 ngclipboardSuccess: '&',
-                ngclipboardError: '&'
+                ngclipboardError: '&',
+                ngclipboardTextProvider: '&'
             },
             link: function(scope, element) {
-                var clipboard = new Clipboard(element[0]);
+                var options = {};
+                if (scope.ngclipboardTextProvider) {
+                    options.text = function () {
+                        return scope.ngclipboardTextProvider();
+                    };
+                }
+
+                var clipboard = new Clipboard(element[0], options);
 
                 clipboard.on('success', function(e) {
                   scope.$apply(function () {
