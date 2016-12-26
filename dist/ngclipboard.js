@@ -24,9 +24,9 @@
                 ngclipboardError: '&',
                 ngclipboardTextProvider: '&'
             },
-            link: function(scope, element) {
+            link: function(scope, element, attributes) {
                 var options = {};
-                if (scope.ngclipboardTextProvider) {
+                if (attributes.ngclipboardTextProvider) {
                     options.text = function () {
                         return scope.ngclipboardTextProvider();
                     };
@@ -49,7 +49,6 @@
                     });
                   });
                 });
-
             }
         };
     });
